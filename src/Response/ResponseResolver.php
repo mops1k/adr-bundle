@@ -60,11 +60,8 @@ final class ResponseResolver
         $responderAttribute = $attributes[Responder::class];
         unset($attributes[Responder::class]);
 
-        $responders = $this->responders;
-        if (is_iterable($this->responders)) {
-            $responders = iterator_to_array($this->responders);
-        }
-        if (!\array_key_exists($responderAttribute->class, $responders)) {
+        /* @phpstan-ignore-next-line */
+        if (!\array_key_exists($responderAttribute->class, $this->responders)) {
             throw new \RuntimeException(\sprintf(
                 'No responder "%s" found for action "%s".',
                 $responderAttribute->class,
@@ -73,7 +70,7 @@ final class ResponseResolver
         }
 
         /** @var ResponderInterface $responder */
-        $responder = $responders[$responderAttribute->class];
+        $responder = $this->responders[$responderAttribute->class];
 
         $response = $responder($action(...$actionArguments), $attributes, $responderAttribute->responseArguments);
 

@@ -49,7 +49,6 @@ class ActionRouteLoader extends AttributeFileLoader implements RouteLoaderInterf
             $routeAttributes[] = $attribute;
         }
 
-        /* @phpstan-ignore-next-line */
         if (0 === count($routeAttributes)) {
             return null;
         }

@@ -23,9 +23,10 @@ class ActionRouteLoader extends AttributeFileLoader implements RouteLoaderInterf
     #[\Override]
     public function load(mixed $file, string $type = null): ?RouteCollection
     {
+        /** @var class-string|false $class */
         $class = $this->findClass($file);
 
-        if (!\method_exists($class, '__invoke')) {
+        if (false === $class || (!\class_exists($class) && !\method_exists($class, '__invoke'))) {
             return null;
         }
         $routes = new RouteCollection();
@@ -48,13 +49,14 @@ class ActionRouteLoader extends AttributeFileLoader implements RouteLoaderInterf
             $routeAttributes[] = $attribute;
         }
 
+        /* @phpstan-ignore-next-line */
         if (0 === count($routeAttributes)) {
             return null;
         }
 
         foreach ($routeAttributes as $attribute) {
             $baseRouteName = $attribute->getName() ?? $class;
-            if (count($attribute->getLocalizedPaths()) > 0) {
+            if (null === $attribute->getPath() && count($attribute->getLocalizedPaths()) > 0) {
                 foreach ($attribute->getLocalizedPaths() as $path) {
                     $routeName = $baseRouteName;
                     if (\array_key_exists($baseRouteName, $collectedRoutes)) {
@@ -68,6 +70,10 @@ class ActionRouteLoader extends AttributeFileLoader implements RouteLoaderInterf
                     );
                 }
 
+                continue;
+            }
+
+            if (null === $attribute->getPath()) {
                 continue;
             }
 

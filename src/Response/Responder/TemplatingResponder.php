@@ -9,9 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Contracts\Service\Attribute\Required;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
-use Twig\Environment;
 
-readonly class TemplatingResponder implements ResponderInterface, ServiceSubscriberInterface
+class TemplatingResponder implements ResponderInterface, ServiceSubscriberInterface
 {
     private ContainerInterface $container;
 
@@ -26,18 +25,14 @@ readonly class TemplatingResponder implements ResponderInterface, ServiceSubscri
 
     public function __invoke(mixed $data, array $attributes, array $responseArguments): Response
     {
-        if (null === $this->container) {
-            throw new \LogicException('Service container not found.');
-        }
-
-        if (!$this->container?->has('twig')) {
+        if (!$this->container->has('twig')) {
             throw new \LogicException(\sprintf(
                 'You cannot use the "%s" responder if the Twig Bundle is not available. Try running "composer require symfony/twig-bundle".',
                 static::class
             ));
         }
 
-        $twig = $this->container?->get('twig');
+        $twig = $this->container->get('twig');
 
         if (!\array_key_exists(Template::class, $attributes)) {
             throw new \RuntimeException('Template path for action not configured.');
@@ -66,7 +61,7 @@ readonly class TemplatingResponder implements ResponderInterface, ServiceSubscri
     public static function getSubscribedServices(): array
     {
         return [
-            'twig' => '?'.Environment::class,
+            'twig' => '?Twig\Environment',
         ];
     }
 }

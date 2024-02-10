@@ -20,6 +20,9 @@ final class ActionControllerResolver
     ) {
     }
 
+    /**
+     * @param class-string|null $_action
+     */
     public function __invoke(Request $request, ?string $_action): Response
     {
         $matched = $this->requestMatcher->matchRequest($request);

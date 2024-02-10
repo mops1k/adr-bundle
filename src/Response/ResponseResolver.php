@@ -32,8 +32,22 @@ final class ResponseResolver
         $this->responders = $withKeysMap;
     }
 
-    public function resolve(callable $action, array $actionArguments): Response
+    /**
+     * @param array<string, mixed> $actionArguments
+     */
+    public function resolve(callable|object $action, array $actionArguments): Response
     {
+        if (!\is_object($action)) {
+            throw new \RuntimeException('Action must be a callable object with "__invoke" method.');
+        }
+
+        if (!\is_callable($action)) {
+            throw new \RuntimeException(\sprintf(
+                'Action "%s" must be a callable.',
+                $action::class
+            ));
+        }
+
         $attributes = $this->resolveAttributes($action);
         if (!\array_key_exists(Responder::class, $attributes)) {
             throw new \RuntimeException(\sprintf(
@@ -46,7 +60,11 @@ final class ResponseResolver
         $responderAttribute = $attributes[Responder::class];
         unset($attributes[Responder::class]);
 
-        if (!\array_key_exists($responderAttribute->class, $this->responders)) {
+        $responders = $this->responders;
+        if (is_iterable($this->responders)) {
+            $responders = iterator_to_array($this->responders);
+        }
+        if (!\array_key_exists($responderAttribute->class, $responders)) {
             throw new \RuntimeException(\sprintf(
                 'No responder "%s" found for action "%s".',
                 $responderAttribute->class,
@@ -55,17 +73,21 @@ final class ResponseResolver
         }
 
         /** @var ResponderInterface $responder */
-        $responder = $this->responders[$responderAttribute->class];
+        $responder = $responders[$responderAttribute->class];
 
         $response = $responder($action(...$actionArguments), $attributes, $responderAttribute->responseArguments);
 
         $event = new PostRespondEvent($response);
+        /* @phpstan-ignore-next-line */
         $this->dispatcher->dispatch($event, $event::NAME);
 
         return $response;
     }
 
-    private function resolveAttributes(callable $action): array
+    /**
+     * @return array<string, object>
+     */
+    private function resolveAttributes(object $action): array
     {
         $reflectionClass = new \ReflectionClass($action);
         $reflectionAttributes = $reflectionClass->getAttributes();

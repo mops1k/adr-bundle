@@ -12,7 +12,7 @@ class FileResponder implements ResponderInterface
 {
     public function __invoke(mixed $data, array $attributes, array $responseArguments): Response
     {
-        if (!is_string($data) || !$data instanceof \SplFileInfo) {
+        if (!is_string($data) && !$data instanceof \SplFileInfo) {
             throw new \RuntimeException(\sprintf(
                 'Action result must be a string or instance of %s, %s given.',
                 \SplFileInfo::class,

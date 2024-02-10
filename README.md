@@ -7,4 +7,4 @@ composer require mops1k/adr-bundle
 ```
 
 ## Documentation
-`soon()`
+See [doc/documentation](doc/documentation.md)

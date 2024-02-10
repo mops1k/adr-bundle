@@ -24,6 +24,36 @@ class Info
 }
 ```
 
+```yaml
+# config/routing.yaml
+user_info:
+    resource: '../src/Action/User/Info.php'
+    type: adr # "type: action" works too
+```
+Or more complex way to add routing:
+```php
+<?php
+
+// config/routes.php
+use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+return static function (RoutingConfigurator $routes): void {
+    // ...
+    $finder = (new Symfony\Component\Finder\Finder())
+        ->in(__DIR__.'/../src/*/Action')
+        ->name('*.php')
+        ->files();
+
+    foreach ($finder as $file) {
+        $routes->import(
+            $file->getRealPath(),
+            'action'
+        );
+    }
+    // ...
+};
+```
+
 In example above we create independent action and make it's routing and responder configuration. When we make request
 to path http://localhost/user/5 - action will find a User and Responder will represent it's data to json response.
 However, we still can use this action in another services, like commands, but if your action has a dependencies, you

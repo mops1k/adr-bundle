@@ -1,5 +1,5 @@
 ## Action-Domain-Responder bundle
-This bundle provide easy way to implement ARD patter with symfony framework.
+This bundle provides an easy way to implement the ADR pattern with the Symfony framework.
 
 ## Install
 ```bash

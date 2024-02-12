@@ -12,7 +12,7 @@ final class ResponseResolver
 {
     public function __construct(
         /**
-         * @var array<ResponderInterface>|\Traversable
+         * @var array<mixed>|\Traversable<mixed>
          */
         private iterable $responders,
         private readonly EventDispatcherInterface $dispatcher,

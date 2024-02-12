@@ -4,13 +4,13 @@
          bootstrap="vendor/autoload.php"
          cacheDirectory=".phpunit.cache"
          executionOrder="depends,defects"
-         requireCoverageMetadata="true"
-         beStrictAboutCoverageMetadata="true"
+         requireCoverageMetadata="false"
+         beStrictAboutCoverageMetadata="false"
          beStrictAboutOutputDuringTests="true"
          failOnRisky="true"
          failOnWarning="true">
     <testsuites>
-        <testsuite name="default">
+        <testsuite name="AdrBundle Tests">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

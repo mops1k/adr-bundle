@@ -38,13 +38,16 @@ return static function (ContainerConfigurator $container): void {
         ->arg('$dispatcher', service('event_dispatcher'));
 
     $services->set(ActionRouteLoader::class)
-        ->parent('routing.loader.attribute.file')
+        ->args([
+            '$locator' => service('file_locator'),
+            '$loader' => service('routing.loader.attribute'),
+        ])
         ->tag('routing.loader');
 
     $services->set(ActionControllerResolver::class)
         ->args([
             '$container' => service('service_container'),
-            '$requestMatcher' => service('router.default'),
+            '$requestMatcher' => service('router'),
             '$argumentResolver' => service('argument_resolver'),
             '$responseResolver' => service(ResponseResolver::class),
         ])

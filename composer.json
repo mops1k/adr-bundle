@@ -21,7 +21,8 @@
     ],
     "require": {
         "php": ">=8.2",
-        "symfony/framework-bundle": "^7.0"
+        "symfony/framework-bundle": "^7.0",
+        "symfony/polyfill-php83": "^1.29"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.42",

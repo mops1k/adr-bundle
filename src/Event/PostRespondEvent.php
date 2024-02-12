@@ -7,7 +7,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class PostRespondEvent extends Event
 {
-    public const string NAME = 'adr.post_respond';
+    public const NAME = 'adr.post_respond';
 
     public function __construct(
         public readonly Response $response

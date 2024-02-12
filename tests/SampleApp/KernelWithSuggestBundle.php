@@ -11,7 +11,6 @@ class KernelWithSuggestBundle extends KernelWithoutSuggestBundle
     public function registerBundles(): iterable
     {
         $bundles = parent::registerBundles();
-        /* @phpstan-ignore-next-line */
         $bundles[] = new TwigBundle();
 
         return $bundles;

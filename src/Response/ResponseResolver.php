@@ -60,7 +60,6 @@ final class ResponseResolver
         $responderAttribute = $attributes[Responder::class];
         unset($attributes[Responder::class]);
 
-        /* @phpstan-ignore-next-line */
         if (!\array_key_exists($responderAttribute->class, $this->responders)) {
             throw new \RuntimeException(\sprintf(
                 'No responder "%s" found for action "%s".',

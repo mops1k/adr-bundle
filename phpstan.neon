@@ -7,13 +7,3 @@ parameters:
         - src/
         - tests/
     treatPhpDocTypesAsCertain: false
-    ignoreErrors:
-        -
-          message: '#Class Symfony\\Component\\Serializer\\SerializerInterface not found.#'
-          path: src/Response/Responder/JsonResponder.php
-        -
-          message: '#Class Symfony\\Bridge\\Twig\\Attribute\\Template not found.#'
-          path: src/Response/Responder/TemplatingResponder.php
-        -
-          message: '#[\d\t]*unknown class Symfony\\Bridge\\Twig\\Attribute\\Template.#'
-          path: src/Response/Responder/TemplatingResponder.php

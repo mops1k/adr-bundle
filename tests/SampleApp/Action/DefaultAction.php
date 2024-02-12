@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Responder(DefaultResponder::class)]
 class DefaultAction
 {
-    public function __invoke(): ?array
+    public function __invoke(): ?string
     {
         return null;
     }

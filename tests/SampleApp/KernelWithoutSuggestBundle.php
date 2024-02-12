@@ -10,7 +10,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\Routing\Loader\ContainerLoader;
-use Symfony\Component\Routing\Loader\PhpFileLoader as RoutingPhpFileLoader;
+use Symfony\Component\Routing\Loader\PhpFileLoader;
 use Symfony\Component\Routing\RouteCollection;
 
 class KernelWithoutSuggestBundle extends Kernel
@@ -56,9 +56,15 @@ class KernelWithoutSuggestBundle extends Kernel
     public function loadRoutes(ContainerLoader $loader): RouteCollection
     {
         $file = (new \ReflectionObject($this))->getFileName();
-        /* @var RoutingPhpFileLoader $kernelLoader */
-        $kernelLoader = $loader->getResolver()->resolve($file, 'php');
         $collection = new RouteCollection();
+        if (false === $file) {
+            return $collection;
+        }
+        /* @var PhpFileLoader $kernelLoader */
+        $kernelLoader = $loader->getResolver()->resolve($file, 'php');
+        if (!$kernelLoader instanceof PhpFileLoader) {
+            return $collection;
+        }
         $configurator = new RoutingConfigurator($collection, $kernelLoader, $file, $file, 'test');
 
         $finder = (new Finder())

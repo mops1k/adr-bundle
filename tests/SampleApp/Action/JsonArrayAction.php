@@ -10,6 +10,9 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Responder(JsonResponder::class)]
 class JsonArrayAction
 {
+    /**
+     * @return array{success: bool}
+     */
     public function __invoke(): array
     {
         return [

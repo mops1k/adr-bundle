@@ -34,10 +34,16 @@ class ActionTest extends KernelTestCase
     {
         self::$class = $kernelClass;
         self::bootKernel();
-        $response = self::$kernel->handle($request);
+        $response = self::$kernel?->handle($request);
+        if (!$response instanceof Response) {
+            self::fail();
+        }
         $assertCallable($response);
     }
 
+    /**
+     * @return \Generator
+     */
     public static function requestProvider(): iterable
     {
         yield 'DefaultResponder' => [
@@ -52,9 +58,9 @@ class ActionTest extends KernelTestCase
             'request' => Request::create('/json-array'),
             'assertCallable' => function (Response $response): void {
                 self::assertEquals(200, $response->getStatusCode());
-                self::assertJson($response->getContent());
+                self::assertJson($response->getContent() ?: '');
 
-                $responseArray = \json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
+                $responseArray = \json_decode($response->getContent() ?: '{}', true, 512, JSON_THROW_ON_ERROR);
                 self::assertEquals(['success' => true], $responseArray);
             },
         ];

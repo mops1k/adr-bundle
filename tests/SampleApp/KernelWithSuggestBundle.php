@@ -11,9 +11,8 @@ class KernelWithSuggestBundle extends KernelWithoutSuggestBundle
     public function registerBundles(): iterable
     {
         $bundles = parent::registerBundles();
+        /* @phpstan-ignore-next-line */
         $bundles[] = new TwigBundle();
-
-        // add twig bundle and serializer
 
         return $bundles;
     }
@@ -30,7 +29,7 @@ class KernelWithSuggestBundle extends KernelWithoutSuggestBundle
                 ],
             ]);
             $container->prependExtensionConfig('twig', [
-                'default_path' => __DIR__ . '/Resources/templates'
+                'default_path' => __DIR__.'/Resources/templates',
             ]);
         });
     }

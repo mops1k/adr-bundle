@@ -12,6 +12,9 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Template('sample.html.twig')]
 class TemplatingAction
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         return [];

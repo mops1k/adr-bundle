@@ -33,6 +33,7 @@ jobs:
                 env:
                     XDEBUG_MODE: coverage
                 with:
+                    version: 10.5.10
                     bootstrap: vendor/autoload.php
                     configuration: phpunit.xml
                     php_extensions: xdebug
@@ -70,6 +71,7 @@ jobs:
                 env:
                     XDEBUG_MODE: coverage
                 with:
+                    version: 10.5.10
                     bootstrap: vendor/autoload.php
                     configuration: phpunit.xml
                     php_extensions: xdebug

@@ -12,10 +12,10 @@ final class ResponseResolver
 {
     public function __construct(
         /**
-         * @var iterable<ResponderInterface>
+         * @var array<ResponderInterface>|\Traversable
          */
         private iterable $responders,
-        private EventDispatcherInterface $dispatcher,
+        private readonly EventDispatcherInterface $dispatcher,
     ) {
         $withKeysMap = [];
         foreach ($this->responders as $responder) {

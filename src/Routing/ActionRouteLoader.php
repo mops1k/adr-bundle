@@ -13,13 +13,6 @@ use Symfony\Component\Routing\RouteCollection;
 
 class ActionRouteLoader extends AttributeFileLoader implements RouteLoaderInterface
 {
-    public function __construct(
-        protected FileLocatorInterface $locator,
-        protected AttributeClassLoader $loader,
-    ) {
-        parent::__construct($this->locator, $this->loader);
-    }
-
     #[\Override]
     public function load(mixed $file, string $type = null): ?RouteCollection
     {

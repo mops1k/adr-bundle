@@ -11,12 +11,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
+ * @covers \AdrBundle\Attribute\Responder
+ * @covers \AdrBundle\Attribute\ContentDispositionType
+ * @covers \AdrBundle\Attribute\SerializerContext
+ * @covers \AdrBundle\Controller\ActionControllerResolver
+ * @covers \AdrBundle\Event\PostRespondEvent
+ * @covers \AdrBundle\Response\ResponseResolver
  * @covers \AdrBundle\Response\Responder\DefaultResponder
  * @covers \AdrBundle\Response\Responder\JsonResponder
  * @covers \AdrBundle\Response\Responder\TemplatingResponder
  * @covers \AdrBundle\Response\Responder\FileResponder
- * @covers \AdrBundle\Attribute\Responder
- * @covers \AdrBundle\Controller\ActionControllerResolver
+ * @covers  \AdrBundle\Routing\ActionRouteLoader
  */
 class ActionTest extends KernelTestCase
 {

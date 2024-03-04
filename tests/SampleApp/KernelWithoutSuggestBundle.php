@@ -6,7 +6,6 @@ use AdrBundle\AdrBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\Routing\Loader\ContainerLoader;
@@ -67,17 +66,10 @@ class KernelWithoutSuggestBundle extends Kernel
         }
         $configurator = new RoutingConfigurator($collection, $kernelLoader, $file, $file, 'test');
 
-        $finder = (new Finder())
-            ->in(__DIR__.'/Action/')
-            ->name('*.php')
-            ->files();
-
-        foreach ($finder as $file) {
-            $configurator->import(
-                $file->getRealPath(),
-                'action'
-            );
-        }
+        $configurator->import(
+            __DIR__.'/Action/',
+            'action'
+        );
 
         return $collection;
     }

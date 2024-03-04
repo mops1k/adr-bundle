@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Loader\AttributeFileLoader;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
-class ActionRouteLoader extends AttributeFileLoader implements RouteLoaderInterface
+class ActionFileRouteLoader extends AttributeFileLoader implements RouteLoaderInterface
 {
     #[\Override]
     public function load(mixed $file, string $type = null): ?RouteCollection

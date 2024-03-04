@@ -29,6 +29,10 @@ class Info
 user_info:
     resource: '../src/Action/User/Info.php'
     type: adr # "type: action" works too
+
+other_actions:
+  resource: '../src/Action/Other/'
+  type: adr # "type: action" works too
 ```
 Or more complex way to add routing:
 ```php

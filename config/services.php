@@ -9,7 +9,8 @@ use AdrBundle\Response\Responder\JsonResponder;
 use AdrBundle\Response\Responder\RedirectResponder;
 use AdrBundle\Response\Responder\TemplatingResponder;
 use AdrBundle\Response\ResponseResolver;
-use AdrBundle\Routing\ActionRouteLoader;
+use AdrBundle\Routing\ActionDirectoryRouteLoader;
+use AdrBundle\Routing\ActionFileRouteLoader;
 use Psr\Container\ContainerInterface;
 
 return static function (ContainerConfigurator $container): void {
@@ -37,7 +38,14 @@ return static function (ContainerConfigurator $container): void {
         ->arg('$responders', tagged_iterator('adr.action.responder'))
         ->arg('$dispatcher', service('event_dispatcher'));
 
-    $services->set(ActionRouteLoader::class)
+    $services->set(ActionFileRouteLoader::class)
+        ->args([
+            '$locator' => service('file_locator'),
+            '$loader' => service('routing.loader.attribute'),
+        ])
+        ->tag('routing.loader');
+
+    $services->set(ActionDirectoryRouteLoader::class)
         ->args([
             '$locator' => service('file_locator'),
             '$loader' => service('routing.loader.attribute'),

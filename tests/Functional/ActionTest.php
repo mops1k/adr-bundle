@@ -21,7 +21,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  * @covers \AdrBundle\Response\Responder\JsonResponder
  * @covers \AdrBundle\Response\Responder\TemplatingResponder
  * @covers \AdrBundle\Response\Responder\FileResponder
- * @covers  \AdrBundle\Routing\ActionRouteLoader
+ * @covers  \AdrBundle\Routing\ActionFileRouteLoader
  */
 class ActionTest extends KernelTestCase
 {
